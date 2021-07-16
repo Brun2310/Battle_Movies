@@ -1,10 +1,6 @@
 
-7
-HELP.md,1\a\1a273f73b7a477b0745593641bd708a6182c7ad5
 ?
 MoviesBattle.md,e\5\e534772b1176fbd5fc8bc236f9434ddcf08cf33b
-^
-.src/main/java/battlemovies/modelo/Usuario.java,d\a\daa24fc32770bc654e03493f88cd07f197f2594d
 g
 7src/main/java/battlemovies/BattleMoveisApplication.java,a\6\a64668b71f3bde18ed9316f67b7540d0e28d2d3d
 ^
@@ -13,8 +9,6 @@ g
 .src/main/java/battlemovies/dao/RankingDao.java,f\7\f7e46387a63c10f0a4be1b22bbe1a9784512fe90
 \
 ,src/main/java/battlemovies/dao/JogosDao.java,0\3\03b3300c4a83848cf0d5b4d64091ba7a32f83044
-]
--src/main/java/battlemovies/dao/FilmesDao.java,0\c\0c91e691526e27ee626b4d36f3e3b2dbd44acf43
 ^
 .src/main/java/battlemovies/aplicacao/main.java,d\8\d85ad758a0605ea3c72e8f6afb663e3883af1b1b
 ^
@@ -33,9 +27,9 @@ b
 0src/main/java/battlemovies/dao/JogosDaoImpl.java,8\1\816151e23c7f815c62057ecefd3edd8a0bc5bec2
 a
 1src/main/java/battlemovies/dao/FilmesDaoImpl.java,1\b\1b9c5755d922e845bb91709d963dbb76fc5759c3
-]
--src/main/java/battlemovies/modelo/Filmes.java,c\a\ca85ce5bb9173e60ef5c6ad7872bb34ce01c1f4d
 j
 :src/main/java/battlemovies/servicos/UsuarioController.java,9\e\9e9103889d6fb39c837a25a8ca5d1d209f55d297
 o
 ?src/main/java/battlemovies/servicos/BattleMoviesController.java,a\2\a2b82fb090324f4b7bb0325c3efd0478d5299d9a
+]
+-src/main/java/battlemovies/dao/FilmesDao.java,0\c\0c91e691526e27ee626b4d36f3e3b2dbd44acf43
