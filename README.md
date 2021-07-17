@@ -2,8 +2,6 @@
     <img alt="BattleMovies Quizz" title="#Battle Movies Quizz" src="../Battle_Movies-master/banner.png" />
 </h1>
 
-# BattleMovies Quizz
-
 ## 💻 Sobre o projeto
 
 Battle Movies - É um game que coloca os conhecimentos cinematográficos dos participantes a prova,
