@@ -1,4 +1,4 @@
-package battlemovies.servicos;
+package battlemovies.controller;
 
 import battlemovies.modelo.*;
 import org.springframework.http.HttpStatus;
