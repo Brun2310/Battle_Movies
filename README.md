@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="BattleMovies Quizz" title="#Battle Movies Quizz" src="../Battle_Movies-tree-main/banner.png" />
+    <img alt="BattleMovies Quizz" title="#Battle Movies Quizz" src="./banner.png" />
 </h1>
 
 ## 💻 Sobre o projeto
