@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class Filmes {
     private int id;
     private String nome;
-    private int notaIMDB; //multiplicar imdbVotes e imbrRatting.
+    private int votosIMDB;
+    private int rattingIMDB;
 }
