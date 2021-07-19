@@ -1,6 +1,7 @@
 package battlemovies.controller;
 
 import battlemovies.dao.FilmesDaoImpl;
+import battlemovies.dao.RankingDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ public class BattleMoviesController {
 
     @Autowired
     private FilmesDaoImpl filmesDao;
+    @Autowired
+    private RankingDaoImpl rankingDao;
 
 //    @GetMapping//Teste de exibição
 //    public String mensagem(){
@@ -34,5 +37,10 @@ public class BattleMoviesController {
 //        //Quanto mais o jogador joga novamente, e mais ele acerta, mais ele sobe no ranking, essa é uma ideia de classificação
 //        return false;
 //    }
+
+    @GetMapping("/ranking")
+    public List ranking(){
+        return rankingDao.linhaEmRanking();
+    }
 
 }

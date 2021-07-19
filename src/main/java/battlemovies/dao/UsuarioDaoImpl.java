@@ -1,5 +1,6 @@
 package battlemovies.dao;
 
+import battlemovies.modelo.Ranking;
 import battlemovies.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -17,12 +18,15 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class UsuarioDaoImpl {
     private String caminho = "src\\main\\java\\battlemovies\\files\\jogadores.csv";
     private Path path;
+    private List<Usuario> registroLinhas = new ArrayList<>();
 
     @PostConstruct
     public void init(){
@@ -38,12 +42,16 @@ public class UsuarioDaoImpl {
         return usuario;
     }
 
-    public Usuario linhaEmUsuario(String linha){
-        StringTokenizer st = new StringTokenizer(linha,",");
-        Usuario usuario = new Usuario();
-        usuario.setNome(st.nextToken());
-        usuario.setSenha(st.nextToken());
-        return usuario;
+    public List linhaEmUsuario() {
+        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho))) {
+            registroLinhas = streamLinhas
+                    .filter(Predicate.not(String::isEmpty))
+                    .map(Usuario::new)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return registroLinhas;
     }
 
     public String formatar(Usuario usuario) {
@@ -51,14 +59,7 @@ public class UsuarioDaoImpl {
     }
 
     public List<Usuario> getAll() {
-        List<Usuario> usuarios =  new ArrayList<>();
-        try(BufferedReader br = Files.newBufferedReader(path)){
-            usuarios = br.lines().map(this::linhaEmUsuario).collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return usuarios;
+        linhaEmUsuario();
+        return registroLinhas;
     }
-
-
 }

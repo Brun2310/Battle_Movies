@@ -12,4 +12,13 @@ public class Filmes {
     private String nome;
     private Long votos;
     private Double rating;
+
+    public Filmes(String txtLinhas) {
+        String[] split = txtLinhas.split(";");
+        this.id = split[0].trim().replace("\"", "");
+        this.nome = split[0].trim().replace("\"", "");
+        this.votos= Long.parseLong(split[1].trim().replace("\"", ""));
+        this.rating= Double.parseDouble(split[1].trim().replace("\"", ""));
+    }
+
 }
