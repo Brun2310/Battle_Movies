@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Filmes {
-    private int id;
+    private String id;
     private String nome;
-    private int votosIMDB;
-    private int rattingIMDB;
+    private Long votos;
+    private Double rating;
 }

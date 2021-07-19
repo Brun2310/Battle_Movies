@@ -1,8 +1,8 @@
 package battlemovies.controller;
 
-import battlemovies.modelo.Filmes;
+import battlemovies.dao.FilmesDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,16 +12,19 @@ import java.util.List;
 @RestController
 public class BattleMoviesController {
 
-    @GetMapping//teste de exibição
-    public String mensagem(){
-        return "Bem vindo ao Battle Movies!";
-    }
+    @Autowired
+    private FilmesDaoImpl filmesDao;
 
-//    @GetMapping
-//    public List<Filmes> exibirFilmes(){
-//        //Aqui será a exibição dos 2 filmes para a batalha
-//        return null;
+//    @GetMapping//Teste de exibição
+//    public String mensagem(){
+//        return "Bem vindo ao Battle Movies!";
 //    }
+
+    @GetMapping
+    public List exibirFilmes(){
+        //TODO pendente arrumar o metodo
+        return filmesDao.getBattleMovie();
+    }
 //
 //    @PostMapping
 //    public boolean checkResultado(){
