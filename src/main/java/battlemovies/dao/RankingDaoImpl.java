@@ -7,11 +7,15 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.function.Predicate;
@@ -28,17 +32,22 @@ public class RankingDaoImpl {
     public void init(){
         path = Paths.get(caminho);
     }
-    //Regra de pontuação
-    //    0/3 = 0 prontos
-    //    1/3 = 3 prontos
-    //    2/3 = 6 prontos
-    //    3/3 = 10 prontos
+
+    public Ranking adicionar(Ranking jogo){
+        try (BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            bf.write(formatar(jogo));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jogo;
+    }
 
     public List linhaEmRanking() {
         try (Stream<String> streamLinhas = Files.lines(Path.of(caminho))) {
             registroLinhas = streamLinhas
                     .filter(Predicate.not(String::isEmpty))
                     .map(Ranking::new)
+                    .sorted((a,b) -> Long.compare(b.getPontuacao(), a.getPontuacao())) //ordena + -> -
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,10 +57,5 @@ public class RankingDaoImpl {
 
     public String formatar(Ranking ranking) {
         return String.format("%s,%f\r\n",ranking.getNome(),ranking.getPontuacao());
-    }
-
-    public List<Ranking> getAll() {
-        linhaEmRanking();
-        return registroLinhas;
     }
 }

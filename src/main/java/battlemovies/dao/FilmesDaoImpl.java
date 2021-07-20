@@ -1,11 +1,10 @@
 package battlemovies.dao;
 
 import battlemovies.modelo.Filmes;
-import battlemovies.modelo.Ranking;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.StringTokenizer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,6 +19,7 @@ import java.util.stream.Stream;
 @Component
 public class FilmesDaoImpl {
     private String caminho = "src\\main\\java\\battlemovies\\files\\filmes.csv";
+    private String caminho2 = "src\\main\\java\\battlemovies\\files\\jogadaTemp.csv";
     private Path path;
     private List<Filmes> registroLinhas = new ArrayList<>();
 
@@ -39,6 +38,7 @@ public class FilmesDaoImpl {
         Filmes filme2 = filmes.get(random.nextInt(filmes.size()));
         battleMovie.add(filme1);
         battleMovie.add(filme2);
+        gravaArquivo(filme1, filme2);
         return battleMovie;
     }
 
@@ -56,6 +56,32 @@ public class FilmesDaoImpl {
 
     public List<Filmes> getAll() {
         linhaEmFilme();
+        return registroLinhas;
+    }
+
+    public void gravaArquivo(Filmes filme1, Filmes filme2){
+        var leArquivo = new File(caminho2);
+        try{
+            var arquivo = new FileWriter(leArquivo, false);
+            arquivo.flush();
+            arquivo.write(String.valueOf(filme1.getId()+","+filme1.getNome()+","+filme1.getVotos()+","+filme1.getRating() +"\n"));
+            arquivo.write(String.valueOf(filme2.getId()+","+filme2.getNome()+","+filme2.getVotos()+","+filme2.getRating()+"\n"));
+            arquivo.close();
+            } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public List filmesJogadaAtual() {
+        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho2))) {
+            registroLinhas = streamLinhas
+                    .filter(Predicate.not(String::isEmpty))
+                    .map(Filmes::new)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return registroLinhas;
     }
 }

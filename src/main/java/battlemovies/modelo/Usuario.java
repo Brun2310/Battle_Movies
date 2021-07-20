@@ -14,6 +14,6 @@ public class Usuario {
     public Usuario(String txtLinhas) {
         String[] split = txtLinhas.split(",");
         this.nome = split[0].trim().replace("\"", "");
-        this.senha = split[0].trim().replace("\"", "");
+        this.senha = split[1].trim().replace("\"", "");
     }
 }
