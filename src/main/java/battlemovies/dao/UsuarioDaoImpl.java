@@ -1,23 +1,20 @@
 package battlemovies.dao;
 
-import battlemovies.modelo.Ranking;
 import battlemovies.modelo.Usuario;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,7 +52,21 @@ public class UsuarioDaoImpl {
     }
 
     public String formatar(Usuario usuario) {
-        return String.format("%s,%s\r\n",usuario.getNome(),usuario.getSenha());
+        return String.format("%s,%s\r\n",usuario.getNome(),cript(usuario.getSenha()));
+    }
+
+    public String cript(String senha){
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("sha-1");
+            messageDigest.reset();
+            final var plainPassword = senha;
+            messageDigest.update(plainPassword.getBytes(StandardCharsets.UTF_8));
+            final var crypto = new BigInteger(1, messageDigest.digest()).toString(16);
+            return crypto;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<Usuario> getAll() {

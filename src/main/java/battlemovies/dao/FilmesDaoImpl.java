@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 @Component
 public class FilmesDaoImpl {
     private String caminho = "src\\main\\java\\battlemovies\\files\\filmes.csv";
-    private String caminho2 = "src\\main\\java\\battlemovies\\files\\jogadaTemp.csv";
+    private String caminho2 = "src\\main\\java\\battlemovies\\files\\filmesTemp.csv";
     private Path path;
     private List<Filmes> registroLinhas = new ArrayList<>();
 
@@ -29,8 +29,6 @@ public class FilmesDaoImpl {
     }
 
     public List getBattleMovie(){
-        //TODO teste pendente devido a erro no linhaEmFilme
-        //Pega a lista completa de filmes, gera 2 ramdom para a batalha
         var filmes = getAll();
         var battleMovie = new ArrayList();
         Random random = new Random();
@@ -70,7 +68,6 @@ public class FilmesDaoImpl {
             } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public List filmesJogadaAtual() {

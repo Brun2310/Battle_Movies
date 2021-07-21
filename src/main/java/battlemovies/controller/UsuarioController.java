@@ -2,6 +2,7 @@ package battlemovies.controller;
 
 import battlemovies.dao.UsuarioDaoImpl;
 import battlemovies.modelo.*;
+import battlemovies.servicos.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioDaoImpl usuarioDao;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @GetMapping //Teste de exibição
     public String mensagem(){
         return "Usuarios!";
@@ -24,20 +28,12 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-     //solicitação: Post>Body>raw>JSON {"nome": "nomeDoUsuario", "senha": "senhaDoUsuario"}
     public String getNovoUsuario(@RequestBody Usuario usuario) {
-        if(validarCriacao(usuario)){
+        if(usuarioService.validarCriacao(usuario)){
         usuarioDao.adicionar(usuario);
             return "Criado com sucesso!";
         }
-        return "Erro, não atende os requisitos!";
+        return "Usuario ou Senha não atende os requisitos!\nNome deve conter 5/10 caracteres; senha deve conter 4/8 caracteres\nProibido uso de caracter especial e espaço em ambos.";
     }
-
-    //Valida requisitos de nome e senha
-    public boolean validarCriacao(Usuario usuario){
-        //TODO necessário aprimorar com char especial e espaço
-        return usuario.getNome().length() >= 5 && usuario.getNome().length() <= 10 && usuario.getSenha().length() >= 4 && usuario.getSenha().length() <= 8;
-    }
-
 
 }

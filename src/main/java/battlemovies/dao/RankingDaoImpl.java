@@ -1,12 +1,8 @@
 package battlemovies.dao;
 
 import battlemovies.modelo.Ranking;
-import battlemovies.modelo.Usuario;
-import lombok.ToString;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,10 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -56,6 +49,6 @@ public class RankingDaoImpl {
     }
 
     public String formatar(Ranking ranking) {
-        return String.format("%s,%f\r\n",ranking.getNome(),ranking.getPontuacao());
+        return String.format("%s,%d\r\n",ranking.getNome(),ranking.getPontuacao());
     }
 }

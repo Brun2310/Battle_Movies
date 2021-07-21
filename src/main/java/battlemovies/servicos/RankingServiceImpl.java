@@ -1,10 +1,21 @@
 package battlemovies.servicos;
 
-public class RankingServiceImpl {
-    private Double pontuacao;
+import battlemovies.dao.RankingDaoImpl;
+import battlemovies.modelo.Jogos;
+import battlemovies.modelo.Ranking;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-    public void formatarRanking(){
-        // pontuacao = VotoIMDB * RatingIMDB
-        //A cada jogada recalcula o ranking com login e pontuação
+@Component
+public class RankingServiceImpl {
+
+    @Autowired
+    private RankingDaoImpl rankingDao;
+
+    public void novoRanking(Jogos jogador) {
+        Ranking jogadorRankeado = new Ranking();
+        jogadorRankeado.setNome(jogador.getLogin());
+        jogadorRankeado.setPontuacao(jogador.getContador()*jogador.getJogadas());
+        rankingDao.adicionar(jogadorRankeado);
     }
 }

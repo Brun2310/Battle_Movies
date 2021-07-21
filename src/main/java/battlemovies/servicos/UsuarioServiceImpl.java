@@ -3,16 +3,49 @@ package battlemovies.servicos;
 import battlemovies.dao.UsuarioDaoImpl;
 import battlemovies.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-//@Service
+@Component
 public class UsuarioServiceImpl{
+    @Autowired
     private UsuarioDaoImpl usuarioDaoImpl;
 
-//    @Autowired
-    public Usuario criarUsuario(Usuario usuario){
-        //Será realizado o cadastro em UsuarioDaoImpl
-        //Também pode ser ignorado essa classe e enviado direto para DAO.. a definir
-        return usuarioDaoImpl.adicionar(usuario);
+    public boolean validaUsuario(String login, String senha){
+        var listaUsuarios = usuarioDaoImpl.getAll();
+        for (battlemovies.modelo.Usuario listaUsuario : listaUsuarios) {
+            if (listaUsuario.getNome().equals(login)) {
+                if ( listaUsuario.getSenha().equals(usuarioDaoImpl.cript(senha))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
+    public boolean validarCriacao(Usuario usuario){
+        if (verificaCaracterEspecial(usuario.getNome())){
+            if (verificaCaracterEspecial(usuario.getSenha())){
+                if (usuario.getNome().length() >= 5 && usuario.getNome().length() <= 10 && usuario.getSenha().length() >= 4 && usuario.getSenha().length() <= 8){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean verificaCaracterEspecial(String stringDado) {
+        if (stringDado == null || stringDado.trim().isEmpty()) {
+            return false;
+        }
+        Pattern p = Pattern.compile("[^A-Za-z0-9]");
+        Matcher m = p.matcher(stringDado);
+        boolean b = m.find();
+        if (b == true)
+            return false;
+        else
+            return true;
+    }
+
 }
