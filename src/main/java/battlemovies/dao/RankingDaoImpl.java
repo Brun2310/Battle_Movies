@@ -26,6 +26,7 @@ public class RankingDaoImpl {
         path = Paths.get(caminho);
     }
 
+    //Adiciona o jogador e a pontuação no final das vidas
     public Ranking adicionar(Ranking jogo){
         try (BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
             bf.write(formatar(jogo));

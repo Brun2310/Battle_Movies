@@ -55,6 +55,7 @@ public class UsuarioDaoImpl {
         return String.format("%s,%s\r\n",usuario.getNome(),cript(usuario.getSenha()));
     }
 
+    //criptografa senha
     public String cript(String senha){
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("sha-1");

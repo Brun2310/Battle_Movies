@@ -31,6 +31,7 @@ public class BattleMoviesController {
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
+//    GET >  http://localhost:8080/quizz
     @GetMapping()
     public List exibirFilmes(){
         return filmesDao.getBattleMovie();
@@ -45,11 +46,15 @@ public class BattleMoviesController {
                 "Pense rápido e jogue! A reputação deles está em suas mãos :D";
     }
 
+//  GET >  http://localhost:8080/quizz/ranking
     @GetMapping("/ranking")
     public List ranking(){
         return rankingDao.linhaEmRanking();
     }
 
+//    POST >  http://localhost:8080/quizz
+//    body > raw > JSON > {"nome": "LuizAlves", "senha": "Senha123", "id": "tt1201607"}
+//    id é pego em GET > http://localhost:8080/quizz
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String getJogadaUsuario(@RequestBody ObjectNode objectNode) {

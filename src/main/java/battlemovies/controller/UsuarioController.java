@@ -21,11 +21,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
-    @GetMapping //Teste de exibição
+//  GET > http://localhost:8080/usuario/
+    @GetMapping
     public String mensagem(){
-        return "Usuarios!";
+        return "Cadastre seu usuarios!";
     }
 
+//  POST >  http://localhost:8080/usuario/
+//  body > raw > JSON > {"nome": "LuizAlves", "senha": "Senha123"}
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String getNovoUsuario(@RequestBody Usuario usuario) {

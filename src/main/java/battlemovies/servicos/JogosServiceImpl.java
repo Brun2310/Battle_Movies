@@ -23,6 +23,7 @@ public class JogosServiceImpl {
     @Autowired
     private RankingServiceImpl rankingService;
 
+    //Verifica o melhor filme calculando Rating * Votos
     public String validaMelhorFilme(String login, String id) {
         listaFilme = filmesDao.filmesJogadaAtual();
         Jogos jogador = new Jogos();
@@ -31,7 +32,6 @@ public class JogosServiceImpl {
         }
         var pontuacaoFilme1 = listaFilme.get(0).getRating() * listaFilme.get(0).getVotos();
         var pontuacaoFilme2 = listaFilme.get(1).getRating() * listaFilme.get(1).getVotos();
-
         if (listaFilme.get(0).getId().equals(id) && jogador.getContador()!=3) {
             return validaAcertoErro(login, jogador, pontuacaoFilme1, pontuacaoFilme2);
         } else if (listaFilme.get(1).getId().equals(id) && jogador.getContador()!=3){
@@ -40,6 +40,7 @@ public class JogosServiceImpl {
         return null;
     }
 
+    //Verifica se o jogador acertou ou errou
     private String validaAcertoErro(String login, Jogos jogador, double pontuacaoFilme1, double pontuacaoFilme2) {
         if (pontuacaoFilme2 > pontuacaoFilme1) {
             jogador.setLogin(login);
@@ -62,6 +63,7 @@ public class JogosServiceImpl {
         }
     }
 
+    //Verifica se o jogador entrou com ID correto
     public boolean validaID(String id) {
         listaFilme = filmesDao.filmesJogadaAtual();
         for (Filmes validaFilmeID : listaFilme) {

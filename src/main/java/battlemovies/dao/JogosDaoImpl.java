@@ -26,18 +26,7 @@ public class JogosDaoImpl {
         path = Paths.get(caminho);
     }
 
-    public List atualizaListPontos() {
-        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho))) {
-            registroLinhas = streamLinhas
-                    .filter(Predicate.not(String::isEmpty))
-                    .map(Jogos::new)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return registroLinhas;
-    }
-
+    //Atualiza a cada jogada do usuario
     public Jogos atualizaJogo(Jogos jogador){
         atualizaListPontos();
         if(validaUsuario(jogador.getLogin())) {
@@ -50,6 +39,7 @@ public class JogosDaoImpl {
         }
     }
 
+    //Continua um jogo pendente do usuario, até ele atingir 3 de vida
     public Jogos continuaJogoPendente(String login){
         atualizaListPontos();
         for (Jogos registroLinha : registroLinhas) {
@@ -58,6 +48,28 @@ public class JogosDaoImpl {
             }
         }
         return null;
+    }
+
+    //Zera o arquivo para um novo jogador
+    public Jogos fimDeJogo(Jogos jogador){
+        try {
+            Files.newBufferedWriter(path , StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jogador;
+    }
+
+    public List atualizaListPontos() {
+        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho))) {
+            registroLinhas = streamLinhas
+                    .filter(Predicate.not(String::isEmpty))
+                    .map(Jogos::new)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return registroLinhas;
     }
 
     public boolean validaUsuario(String login){
@@ -73,15 +85,6 @@ public class JogosDaoImpl {
     public Jogos gravaJogos(Jogos jogador){
         try (BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
             bf.write(formatar(jogador));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return jogador;
-    }
-
-    public Jogos fimDeJogo(Jogos jogador){
-        try {
-            Files.newBufferedWriter(path , StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }

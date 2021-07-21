@@ -28,6 +28,7 @@ public class FilmesDaoImpl {
         path = Paths.get(caminho);
     }
 
+    //Gera dois filmes random envia para o GET e envia os dados para o metodo filmesJogadaAtual();
     public List getBattleMovie(){
         var filmes = getAll();
         var battleMovie = new ArrayList();
@@ -38,6 +39,19 @@ public class FilmesDaoImpl {
         battleMovie.add(filme2);
         gravaArquivo(filme1, filme2);
         return battleMovie;
+    }
+
+    //Grava os filmes da jogada atual em um csv para ser possível manipular os dados sem perder eles em novas solicitações
+    public List filmesJogadaAtual() {
+        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho2))) {
+            registroLinhas = streamLinhas
+                    .filter(Predicate.not(String::isEmpty))
+                    .map(Filmes::new)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return registroLinhas;
     }
 
     public List linhaEmFilme() {
@@ -70,15 +84,4 @@ public class FilmesDaoImpl {
         }
     }
 
-    public List filmesJogadaAtual() {
-        try (Stream<String> streamLinhas = Files.lines(Path.of(caminho2))) {
-            registroLinhas = streamLinhas
-                    .filter(Predicate.not(String::isEmpty))
-                    .map(Filmes::new)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return registroLinhas;
-    }
 }

@@ -12,6 +12,7 @@ public class UsuarioServiceImpl{
     @Autowired
     private UsuarioDaoImpl usuarioDaoImpl;
 
+    //Verifica se o usuário existe
     public boolean validaUsuario(String login, String senha){
         var listaUsuarios = usuarioDaoImpl.getAll();
         for (battlemovies.modelo.Usuario listaUsuario : listaUsuarios) {
@@ -24,6 +25,7 @@ public class UsuarioServiceImpl{
         return false;
     }
 
+    //Verifica se os dados correspondem as regras
     public boolean validarCriacao(Usuario usuario){
         if (verificaCaracterEspecial(usuario.getNome())){
             if (verificaCaracterEspecial(usuario.getSenha())){
@@ -35,6 +37,7 @@ public class UsuarioServiceImpl{
         return false;
     }
 
+    //Verificação de caractere especial e espaço
     public boolean verificaCaracterEspecial(String stringDado) {
         if (stringDado == null || stringDado.trim().isEmpty()) {
             return false;
